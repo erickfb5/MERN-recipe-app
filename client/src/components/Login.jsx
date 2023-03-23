@@ -25,8 +25,8 @@ setCookies('access_token', response.data.token)
 window.localStorage.setItem('userID', response.data.userID)    
 navigate('/')
 
-} catch (error) {
-      console.error(error);
+} catch (err) {
+      console.error(err);
     }
   };
 

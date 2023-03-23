@@ -17,8 +17,8 @@ const Register = () => {
 
       alert('Registration completed sucessfully. Now you may login')
 
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      console.error(err)
     }
   };
 
