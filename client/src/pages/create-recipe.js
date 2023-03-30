@@ -17,11 +17,11 @@ const CreateRecipe = () => {
   });
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (!userID) {
       alert("You must login to create a recipe!");
-      navigate("/auth");
+      navigate("/login");
     }
   }, []);
 
