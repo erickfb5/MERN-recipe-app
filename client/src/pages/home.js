@@ -64,12 +64,14 @@ const Home = () => {
               <div>
                 <h2>{recipe.name}</h2>
               </div>
-              <button
-                onClick={() => saveRecipe(recipe._id)}
-                disabled={isRecipeSaved(recipe._id)}
-              >
-                {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-              </button>
+              {userID && (
+                <button
+                  onClick={() => saveRecipe(recipe._id)}
+                  disabled={isRecipeSaved(recipe._id)}
+                >
+                  {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
+                </button>
+              )}
 
               <div className="instructions">
                 <p>{recipe.instructions}</p>
