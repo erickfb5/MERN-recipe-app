@@ -111,6 +111,11 @@ img {
   width: 400px;
 }
 
+.spinner {
+    width: 200px;
+    height: 200px;
+}
+
 p {
   max-width: 400px;
   font-size: 12px;
