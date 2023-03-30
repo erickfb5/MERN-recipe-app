@@ -20,7 +20,7 @@ const CreateRecipe = () => {
 
   useEffect(() => {
     if (!userID) {
-      alert("You must login to create a recipe!");
+      alert("You must log in to create a recipe!");
       navigate("/login");
     }
   }, []);

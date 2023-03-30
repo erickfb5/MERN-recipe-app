@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import { FormInput } from "./FormInput";
 
 export const Form = ({
@@ -10,9 +11,9 @@ export const Form = ({
   onSubmit,
   errorMessage,
 }) => {
-  const navigate = useNavigate();
+  
   const usernameRegex = /^[a-zA-Z]?(?!.*__)[a-zA-Z_]*$/;
-
+  const passwordRegex = /^(\S+)?$/;
 
   return (
     <div className="auth-container">
@@ -23,27 +24,40 @@ export const Form = ({
           type="username"
           value={username}
           onChange={(event) =>
-            usernameRegex.test(event.target.value) &&
-            setUsername((event.target.value).toLowerCase())
+            label !== "Register"
+              ? setUsername(event.target.value.toLowerCase())
+              : usernameRegex.test(event.target.value) &&
+                setUsername(event.target.value.toLowerCase())
           }
         />
         <FormInput
           label="Password"
           type="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) =>
+            passwordRegex.test(event.target.value) &&
+            setPassword(event.target.value)
+          }
         />
         {errorMessage && (
           <p className="error-message">
             {errorMessage} <br />
           </p>
         )}
-        <button type="submit">{label}</button>
+        <button className="submit" type="submit">
+          {label}
+        </button>
+        <br />
+        <br />
 
-        <br />
-        <br />
-        {label === "Login" && (
-          <button onClick={() => navigate("/register")}>REGISTER</button>
+        {label === "Log in" && (
+          <>
+            Don't have an account?
+            <Link className="register-link" to={"/register"}>
+              Register
+            </Link>
+            now.
+          </>
         )}
       </form>
     </div>

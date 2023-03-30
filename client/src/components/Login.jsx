@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { Form } from "./Form";
 
@@ -28,7 +28,6 @@ const Login = () => {
       
     } catch (err) {
       const { message } = err.response.data;
-      alert(message);
       setErrorMessage(message);
       console.error(err);
     }
@@ -40,7 +39,7 @@ const Login = () => {
       setUsername={setUsername}
       password={password}
       setPassword={setPassword}
-      label="Login"
+      label="Log in"
       onSubmit={onSubmit}
       errorMessage={errorMessage}
     />
