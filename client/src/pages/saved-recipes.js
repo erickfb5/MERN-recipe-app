@@ -16,7 +16,7 @@ const SavedRecipes = () => {
           `http://localhost:3001/recipes/savedRecipes/${userID}`
         );
 
-        console.log('response', response.data)
+        console.log('response', response)
         setSavedRecipes(response.data.savedRecipes);
         setLoading(false);
       } catch (err) {
@@ -33,7 +33,7 @@ const SavedRecipes = () => {
         <Spinner />
       ) : (
         <ul>
-          {savedRecipes.map((recipe) => (
+          {savedRecipes?.map((recipe) => (
             <li key={recipe._id}>
               <div>
                 <h2>{recipe.name}</h2>
