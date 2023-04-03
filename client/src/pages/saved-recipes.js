@@ -3,20 +3,26 @@ import axios from "axios";
 
 import { Spinner } from "../components";
 import { useGetUserID } from "../hooks/useGetUserID";
+import { useNavigate } from "react-router-dom";
 
 const SavedRecipes = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const userID = useGetUserID();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!userID) {
+      navigate("/login");
+    }
+
     const fetchSavedRecipe = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3001/recipes/savedRecipes/${userID}`
         );
 
-        console.log('response', response)
+        console.log("response", response);
         setSavedRecipes(response.data.savedRecipes);
         setLoading(false);
       } catch (err) {
