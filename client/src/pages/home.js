@@ -15,7 +15,7 @@ const Home = () => {
     const fetchRecipe = async () => {
       try {
         const response = await axios.get("http://localhost:3001/recipes");
-        setRecipes(response.data);
+        setRecipes(response.data.reverse());
         setLoading(false);
       } catch (err) {
         console.error(err);
