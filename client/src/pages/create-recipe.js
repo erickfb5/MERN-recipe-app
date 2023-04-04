@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { useGetUserID } from "../hooks/useGetUserID";
+import { useGetUserId } from "../hooks/useGetUserId";
 
 const CreateRecipe = () => {
-  const userID = useGetUserID();
+  const userId = useGetUserId();
 
   const [recipe, setRecipe] = useState({
     name: "",
@@ -13,13 +13,14 @@ const CreateRecipe = () => {
     instructions: "",
     imageUrl: "",
     cookingTime: 0,
-    userOwner: userID,
+    userOwner: userId,
   });
 
+  const ingredients = recipe.ingredients;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userID) {
+    if (!userId) {
       alert("You must log in to create a recipe!");
       navigate("/login");
     }
@@ -32,13 +33,14 @@ const CreateRecipe = () => {
 
   const handleIngredientChange = (event, index) => {
     const { value } = event.target;
-    const ingredients = recipe.ingredients;
+    // const ingredients = recipe.ingredients;
     ingredients[index] = value;
     setRecipe({ ...recipe, ingredients });
   };
 
   const addIngredient = (event) => {
-    setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
+    if (ingredients.length === 0 || ingredients[ingredients.length - 1])
+      setRecipe({ ...recipe, ingredients: [...ingredients, ""] });
   };
 
   const onSubmit = async (event) => {
@@ -60,7 +62,7 @@ const CreateRecipe = () => {
         <input type="text" id="name" name="name" onChange={handleChange} />
 
         <label htmlFor="ingredients">Ingredients</label>
-        {recipe.ingredients.map((ingredient, index) => (
+        {ingredients.map((ingredient, index) => (
           <input
             key={index}
             type="text"

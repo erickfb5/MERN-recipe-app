@@ -1,1 +1,1 @@
-export const useGetUserID = () => window.localStorage.getItem("userID");
+export const useGetUserId = () => window.localStorage.getItem("userId");
