@@ -61,9 +61,11 @@ const Home = () => {
               </div>
               <div className="instructions">
                 <h4>Instructions</h4>
-                <p>{recipe.instructions}</p>
+                {recipe?.instructions.map((instruction, index) => (
+                  <p key={`${instruction}-${index}`}>{instruction}</p>
+                ))}
               </div>
-              <p>Cooking Time: {`${recipe.cookingTime} minutes`}</p>
+              <h5>⏰ Cooking Time: {`${recipe.cookingTime} minutes`}</h5>
             </li>
           ))}
         </ul>

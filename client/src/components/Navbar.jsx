@@ -10,6 +10,7 @@ const Navbar = () => {
   const logout = () => {
     setCookies("access_token", "");
     window.localStorage.removeItem("userId");
+    window.localStorage.removeItem("username");
   };
 
   return (

@@ -26,6 +26,8 @@ const CreateRecipe = () => {
     userOwner: userId,
   });
 
+  const [errorMessage, setErrorMessage] = useState(false);
+
   const { ingredients, instructions } = recipe;
 
   const navigate = useNavigate();
@@ -39,10 +41,9 @@ const CreateRecipe = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-const {ingredients, instructions} = recipe;
-alert(ingredients, instructions)
-    if (!ingredients || !instructions) return
-
+    const { ingredients, instructions } = recipe;
+    if (!ingredients[0] || !instructions[0]) return setErrorMessage(true);
+    setErrorMessage(false);
     try {
       await axios.post("http://localhost:3001/recipes", recipe);
       alert("New recipe was created.");
@@ -95,30 +96,30 @@ alert(ingredients, instructions)
 
         <label htmlFor="instructions">Instructions</label>
         {instructions?.map((instruction, index) => (
-            <div
+          <div
             key={index}
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-          <input
-            key={index}
-            type="text"
-            name="instructions"
-            value={instruction}
-            onChange={(event) =>
-              handleInstructionChange(event, recipe, setRecipe, index)
-            }
-            required
-          />
-          <button
-          className="delete-button"
-          type="button"
-          onClick={() => deleteInstruction(recipe, setRecipe, index)}
-        >
-          x
-          </button>
+            <input
+              key={index}
+              type="text"
+              name="instructions"
+              value={instruction}
+              onChange={(event) =>
+                handleInstructionChange(event, recipe, setRecipe, index)
+              }
+              required
+            />
+            <button
+              className="delete-button"
+              type="button"
+              onClick={() => deleteInstruction(recipe, setRecipe, index)}
+            >
+              x
+            </button>
           </div>
         ))}
-        <button onClick={()=> addInstruction(recipe, setRecipe)} type="button">
+        <button onClick={() => addInstruction(recipe, setRecipe)} type="button">
           Add
         </button>
 
@@ -138,6 +139,11 @@ alert(ingredients, instructions)
           onChange={(event) => handleChange(event, recipe, setRecipe)}
         />
         <button type="submit">Create Recipe</button>
+        {errorMessage && (
+          <p className="error-message">
+            Ingredients and instructions must be added. <br />
+          </p>
+        )}
       </form>
     </div>
   );

@@ -27,9 +27,7 @@ export const saveRecipe = async (recipeId, userId, setSavedRecipes) => {
   try {
     const { data } = await api.put("", { recipeId, userId });
 
-    if (data) {
       setSavedRecipes(data.savedRecipes);
-    }
   } catch (err) {
     console.error(`Error saving recipe: ${err}`);
     throw new Error("Failed to save recipe.");

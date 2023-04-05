@@ -22,10 +22,11 @@ const Login = () => {
         username,
         password,
       });
-      setCookies("access_token", response.data.token);
-      window.localStorage.setItem("userId", response.data.userId);
+      const { token, userId } = response.data;
+      setCookies("access_token", token);
+      window.localStorage.setItem("userId", userId);
+      window.localStorage.setItem("username", `@${username}`);
       navigate("/");
-      
     } catch (err) {
       const { message } = err.response.data;
       setErrorMessage(message);
