@@ -39,6 +39,10 @@ const CreateRecipe = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+const {ingredients, instructions} = recipe;
+alert(ingredients, instructions)
+    if (!ingredients || !instructions) return
+
     try {
       await axios.post("http://localhost:3001/recipes", recipe);
       alert("New recipe was created.");

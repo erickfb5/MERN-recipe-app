@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./App.css";
 import { Login, Navbar, Register } from "./components/";
 import {  CreateRecipe, Home, NotFound, SavedRecipes } from "./pages";
+import "./App.css";
 
 const App = () => {
   return (
