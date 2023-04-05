@@ -45,6 +45,7 @@ label {
 }
 
 input {
+  margin-bottom: 10px;
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
@@ -173,4 +174,23 @@ p {
 
 .modal-header {
   margin-bottom: 10px;
+}
+
+.delete-button {
+  background-color: #e74c3c; 
+  color: white;
+  border: none;
+  border-radius: 5px; 
+  margin-left: 5px;
+  margin-bottom: 10px;
+  padding: 10px 16px;
+  
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer; 
+  transition: background-color 0.2s ease-out; /* add a smooth transition effect */
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* darken the button on hover for a visual feedback */
 }

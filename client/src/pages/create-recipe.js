@@ -4,19 +4,30 @@ import axios from "axios";
 
 import { useGetUserId } from "../hooks/useGetUserId";
 
+import {
+  addIngredient,
+  addInstruction,
+  deleteIngredient,
+  deleteInstruction,
+  handleChange,
+  handleIngredientChange,
+  handleInstructionChange,
+} from "../utils/utils";
+
 const CreateRecipe = () => {
   const userId = useGetUserId();
 
   const [recipe, setRecipe] = useState({
     name: "",
     ingredients: [],
-    instructions: "",
+    instructions: [],
     imageUrl: "",
     cookingTime: 0,
     userOwner: userId,
   });
 
-  const ingredients = recipe.ingredients;
+  const { ingredients, instructions } = recipe;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,24 +37,7 @@ const CreateRecipe = () => {
     }
   }, []);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setRecipe({ ...recipe, [name]: value });
-  };
-
-  const handleIngredientChange = (event, index) => {
-    const { value } = event.target;
-    // const ingredients = recipe.ingredients;
-    ingredients[index] = value;
-    setRecipe({ ...recipe, ingredients });
-  };
-
-  const addIngredient = (event) => {
-    if (ingredients.length === 0 || ingredients[ingredients.length - 1])
-      setRecipe({ ...recipe, ingredients: [...ingredients, ""] });
-  };
-
-  const onSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await axios.post("http://localhost:3001/recipes", recipe);
@@ -57,36 +51,79 @@ const CreateRecipe = () => {
   return (
     <div className="create-recipe">
       <h2>Create Recipe</h2>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label>
-        <input type="text" id="name" name="name" onChange={handleChange} />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          onChange={(event) => handleChange(event, recipe, setRecipe)}
+          required
+        />
 
         <label htmlFor="ingredients">Ingredients</label>
         {ingredients.map((ingredient, index) => (
+          <div
+            key={index}
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <input
+              type="text"
+              name="ingredients"
+              value={ingredient}
+              onChange={(event) =>
+                handleIngredientChange(event, recipe, setRecipe, index)
+              }
+              required
+            />
+            <button
+              className="delete-button"
+              type="button"
+              onClick={() => deleteIngredient(recipe, setRecipe, index)}
+            >
+              x
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={() => addIngredient(recipe, setRecipe)}>
+          Add
+        </button>
+
+        <label htmlFor="instructions">Instructions</label>
+        {instructions?.map((instruction, index) => (
+            <div
+            key={index}
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
           <input
             key={index}
             type="text"
-            name="ingredients"
-            value={ingredient}
-            onChange={(event) => handleIngredientChange(event, index)}
+            name="instructions"
+            value={instruction}
+            onChange={(event) =>
+              handleInstructionChange(event, recipe, setRecipe, index)
+            }
+            required
           />
+          <button
+          className="delete-button"
+          type="button"
+          onClick={() => deleteInstruction(recipe, setRecipe, index)}
+        >
+          x
+          </button>
+          </div>
         ))}
-        <button onClick={addIngredient} type="button">
-          Add Ingredient
+        <button onClick={()=> addInstruction(recipe, setRecipe)} type="button">
+          Add
         </button>
-        <label htmlFor="instructions">Instructions</label>
-        <textarea
-          id="instructions"
-          name="instructions"
-          onChange={handleChange}
-        ></textarea>
 
         <label htmlFor="imageUrl">Image URL</label>
         <input
           type="text"
           id="imageUrl"
           name="imageUrl"
-          onChange={handleChange}
+          onChange={(event) => handleChange(event, recipe, setRecipe)}
         />
 
         <label htmlFor="cookingTime">Cooking Time (minutes)</label>
@@ -94,7 +131,7 @@ const CreateRecipe = () => {
           type="number"
           id="cookingTime"
           name="cookingTime"
-          onChange={handleChange}
+          onChange={(event) => handleChange(event, recipe, setRecipe)}
         />
         <button type="submit">Create Recipe</button>
       </form>
