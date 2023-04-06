@@ -1,5 +1,4 @@
-export {default as Login} from './Login'
 export {default as Navbar} from './Navbar'
-export {default as Register} from './Register'
-export {default as SavingRecipe} from './SavingRecipe'
+export {default as Register} from '../pages/Register'
+export {default as OverlayModal} from './OverlayModal'
 export {default as Spinner} from './Spinner'

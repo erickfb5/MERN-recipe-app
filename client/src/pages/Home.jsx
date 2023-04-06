@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 
-import { SavingRecipe, Spinner } from "../components";
+import { OverlayModal, Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
 import { fetchRecipe, fetchSavedRecipe, saveRecipe } from "../api/api";
 
@@ -19,8 +19,6 @@ const Home = () => {
   }, [userId]);
 
   const isRecipeSaved = (id) => savedRecipes?.includes(id);
-
-  console.log(recipes);
 
   const handleSaveRecipe = async (recipeId) => {
     try {
@@ -89,7 +87,7 @@ const Home = () => {
           ))}
         </ul>
       )}
-      {isSaving && <SavingRecipe />}
+      {isSaving && <OverlayModal message='Saving recipe'/>}
     </div>
   );
 };

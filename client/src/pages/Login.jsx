@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
-import { Form } from "./Form";
+import { Form } from "../components/Form";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [timeoutId, setTimeoutId] = useState(null);
 
   const [_, setCookies] = useCookies(["access_token"]);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -26,15 +34,25 @@ const Login = () => {
       setCookies("access_token", token);
       window.localStorage.setItem("userId", userId);
       window.localStorage.setItem("username", `@${username}`);
-      navigate("/");
+
+      toast.success(`Successfully logged in as @${username}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2500,
+      });
+
+      setTimeoutId(setTimeout(() => navigate("/"), 2500));
     } catch (err) {
       const { message } = err.response.data;
-      setErrorMessage(message);
+      toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.error(err);
     }
   };
 
   return (
+    <>
+    <ToastContainer/>
     <Form
       username={username}
       setUsername={setUsername}
@@ -42,8 +60,9 @@ const Login = () => {
       setPassword={setPassword}
       label="Log in"
       onSubmit={onSubmit}
-      errorMessage={errorMessage}
     />
+    </>
+
   );
 };
 
