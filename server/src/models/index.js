@@ -1,2 +1,2 @@
-export { RecipeModel } from "./Recipes.js";
-export { UserModel } from "./Users.js";
+export { recipeModel } from "./recipe-schema.js";
+export { userModel } from "./user-schema.js";
