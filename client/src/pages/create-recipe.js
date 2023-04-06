@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { useGetUserId } from "../hooks/useGetUserId";
+import { useGetUsername } from "../hooks/useGetUsername";
 
 import {
   addIngredient,
@@ -16,6 +17,9 @@ import {
 
 const CreateRecipe = () => {
   const userId = useGetUserId();
+  const username = useGetUsername();
+  const currentDate = new Date();
+  console.log(currentDate)
 
   const [recipe, setRecipe] = useState({
     name: "",
@@ -24,11 +28,16 @@ const CreateRecipe = () => {
     imageUrl: "",
     cookingTime: 0,
     userOwner: userId,
+    createdBy: username,
+    createdAt: ''
+    
+    
   });
 
   const [errorMessage, setErrorMessage] = useState(false);
 
   const { ingredients, instructions } = recipe;
+
 
   const navigate = useNavigate();
 
@@ -45,7 +54,7 @@ const CreateRecipe = () => {
     if (!ingredients[0] || !instructions[0]) return setErrorMessage(true);
     setErrorMessage(false);
     try {
-      await axios.post("http://localhost:3001/recipes", recipe);
+      await axios.post("http://localhost:3001/recipes", {...recipe, createdAt: new Date()});
       alert("New recipe was created.");
       navigate("/");
     } catch (err) {

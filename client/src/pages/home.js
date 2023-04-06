@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import moment from "moment";
 
 import { SavingRecipe, Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
@@ -18,6 +19,8 @@ const Home = () => {
   }, [userId]);
 
   const isRecipeSaved = (id) => savedRecipes?.includes(id);
+
+  console.log(recipes);
 
   const handleSaveRecipe = async (recipeId) => {
     try {
@@ -65,7 +68,23 @@ const Home = () => {
                   <p key={`${instruction}-${index}`}>{instruction}</p>
                 ))}
               </div>
-              <h5>⏰ Cooking Time: {`${recipe.cookingTime} minutes`}</h5>
+              <div>
+                <h5>⏰ Cooking Time: {`${recipe.cookingTime} minutes`}</h5>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  {recipe.createdBy && (
+                    <>
+                    <p>
+                      Created by: {recipe.createdBy}{" "}
+                    </p>
+                      <p>
+                      {moment(recipe.createdAt).fromNow()}
+                    </p>
+                    </>
+                  )}
+                </div>
+              </div>
             </li>
           ))}
         </ul>

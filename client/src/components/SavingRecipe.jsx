@@ -1,8 +1,8 @@
 const SavingRecipe = () => {
   return (
-<div class="modal" id="savingModal">
-  <div class="modal-content">
-    <div class="modal-header">
+<div className="modal" id="savingModal">
+  <div className="modal-content">
+    <div className="modal-header">
       <h3>Saving Recipe...</h3>
     </div>
   </div>
