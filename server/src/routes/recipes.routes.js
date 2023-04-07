@@ -68,4 +68,19 @@ router.get("/savedRecipes/:userId", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const recipe = await recipeModel.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found." });
+    }
+    await recipe.remove();
+    res.json({ message: "Recipe deleted successfully." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error deleting recipe." });
+  }
+});
+
+
 export { router as recipesRouter };
