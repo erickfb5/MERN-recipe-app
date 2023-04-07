@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const api = axios.create({ baseURL: "http://localhost:3001/recipes" });
 
@@ -9,7 +10,11 @@ export const fetchRecipe = async (setRecipes, setLoading) => {
     setLoading(false);
   } catch (err) {
     console.error(`Error fetching recipes: ${err}`);
+    toast.error(err.message, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
     setLoading(false);
+   
     throw new Error("Failed to fetch recipes.");
   }
 };
@@ -20,6 +25,10 @@ export const fetchSavedRecipe = async (userId, setSavedRecipes) => {
     setSavedRecipes(data.savedRecipes);
   } catch (err) {
     console.error(`Error fetching saved recipes: ${err}`);
+    toast.error(err.message, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    
     throw new Error("Failed to fetch saved recipes.");
   }
 };
@@ -31,6 +40,12 @@ export const saveRecipe = async (recipeId, userId, setSavedRecipes) => {
     setSavedRecipes(data.savedRecipes);
   } catch (err) {
     console.error(`Error saving recipe: ${err}`);
+    
+    toast.dismiss();
+    toast.error(err.message, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    
     throw new Error("Failed to save recipe.");
   }
 };
@@ -46,6 +61,18 @@ export const fetchSavedRecipes = async (
     setLoading(false);
   } catch (err) {
     console.error(`Error fetching saved recipes: ${err}`);
+   
     throw new Error("Failed to fetch saved recipes.");
   }
 };
+
+export const deleteRecipe = async (recipeId) => {
+  try {
+    const { data } = await api.delete(`/${recipeId}`);
+    return data;
+  } catch (err) {
+    console.error(`Error deleting recipe: ${err}`);
+    throw new Error("Failed to delete recipe.");
+  }
+};
+

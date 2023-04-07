@@ -5,6 +5,7 @@ import { Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
 import { useNavigate } from "react-router-dom";
 import { fetchSavedRecipes } from "../api/api";
+import moment from "moment";
 
 const SavedRecipes = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);
@@ -36,13 +37,37 @@ const SavedRecipes = () => {
               <li key={recipe._id}>
                 <div>
                   <h2>{recipe.name}</h2>
+                  <img src={recipe.imageUrl} alt={recipe.name} />
                 </div>
 
-                <div className="instructions">
-                  <p>{recipe.instructions}</p>
+                <div className="ingredients">
+                  <h4>Ingredients</h4>
+
+                  {recipe?.ingredients.map((ingredient, index) => (
+                    <p key={`${ingredient}-${index}`}>{ingredient}</p>
+                  ))}
                 </div>
-                <img src={recipe.imageUrl} alt={recipe.name} />
-                <p>Cooking Time: {`${recipe.cookingTime} minutes`}</p>
+                <div className="instructions">
+                  <h4>Instructions</h4>
+                  {recipe.instructions.split(".").map((instruction) => (
+                    <p key={instruction}>{instruction}</p>
+                  ))}
+                </div>
+                <div>
+                  <h5>⏰ Cooking Time: {`${recipe.cookingTime} minutes`}</h5>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                        <p>
+                          {`Created by ${
+                            recipe.userOwner === userId
+                              ? "you"
+                              : recipe.createdBy
+                          }`}
+                        </p>
+                        <p>{moment(recipe.createdAt).fromNow()}</p>
+                  </div>
+                </div>
               </li>
             ))
           )}

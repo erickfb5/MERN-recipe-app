@@ -7,9 +7,7 @@ import { useGetUserId } from "../hooks/useGetUserId";
 import { useGetUsername } from "../hooks/useGetUsername";
 import {
   addIngredient,
-  addInstruction,
   deleteIngredient,
-  deleteInstruction,
   handleChange,
   handleIngredientChange,
   handleInstructionChange,
@@ -23,7 +21,7 @@ const CreateRecipe = () => {
   const [recipe, setRecipe] = useState({
     name: "",
     ingredients: [],
-    instructions: [],
+    instructions: "",
     imageUrl: "",
     cookingTime: 0,
     userOwner: userId,
@@ -37,7 +35,6 @@ const CreateRecipe = () => {
 
   useEffect(() => {
     if (!userId) {
-
       toast.warning("You must log in to create a recipe!");
       setTimeout(() => navigate("/login"), 3000);
     }
@@ -46,21 +43,20 @@ const CreateRecipe = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { ingredients, instructions } = recipe;
-    
+
     if (!ingredients[0] || !instructions[0]) {
-      return toast.warning("Ingredients and instructions must be added.")
+      return toast.warning("Ingredients and instructions must be added.");
     }
 
     try {
       await axios.post("http://localhost:3001/recipes", {
         ...recipe,
-        createdAt: new Date(),
+        createdAt: currentDate,
       });
-      
+
       toast.dismiss();
       toast.success("New recipe was created.");
       setTimeout(() => navigate("/"), 3000);
-
     } catch (err) {
       console.error(err);
     }
@@ -108,6 +104,7 @@ const CreateRecipe = () => {
               </div>
             ))}
             <button
+              className="add-button"
               type="button"
               onClick={() => addIngredient(recipe, setRecipe)}
             >
@@ -115,36 +112,18 @@ const CreateRecipe = () => {
             </button>
 
             <label htmlFor="instructions">Instructions</label>
-            {instructions?.map((instruction, index) => (
-              <div
-                key={index}
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <input
-                  key={index}
-                  type="text"
-                  name="instructions"
-                  value={instruction}
-                  onChange={(event) =>
-                    handleInstructionChange(event, recipe, setRecipe, index)
-                  }
-                  required
-                />
-                <button
-                  className="delete-button"
-                  type="button"
-                  onClick={() => deleteInstruction(recipe, setRecipe, index)}
-                >
-                  x
-                </button>
-              </div>
-            ))}
-            <button
-              onClick={() => addInstruction(recipe, setRecipe)}
-              type="button"
-            >
-              Add
-            </button>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <textarea
+                type="text"
+                name="instructions"
+                value={instructions}
+                onChange={(event) =>
+                  handleInstructionChange(event, recipe, setRecipe)
+                }
+                required
+                style={{ minHeight: 100, resize: "vertical" }}
+              />
+            </div>
 
             <label htmlFor="imageUrl">Image URL</label>
             <input
@@ -163,8 +142,9 @@ const CreateRecipe = () => {
               onChange={(event) => handleChange(event, recipe, setRecipe)}
               required
             />
-            <button type="submit">Create Recipe</button>
-            
+            <button className="submit" type="submit">
+              Create Recipe
+            </button>
           </form>
         </div>
       )}

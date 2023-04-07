@@ -134,11 +134,12 @@ p {
   border: none;
   border-radius: 5px;
   box-shadow: #7f1818;
+  transition: background-color 0.3s ease-out; 
 }
 
 .submit:hover {
   color: white;
-  background-color: rgb(3, 105, 231);
+  background-color: rgb(8, 181, 97);
 }
 
 .error-message {
@@ -176,6 +177,27 @@ p {
   margin-bottom: 10px;
 }
 
+
+.add-button {
+  background-color: #3c6de7; 
+  color: white;
+  border: none;
+  border-radius: 5px; 
+  margin-left: 5px;
+  margin-bottom: 10px;
+  padding: 10px 16px;
+  
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer; 
+  transition: background-color 0.2s ease-out; 
+}
+
+.add-button:hover {
+  background-color: #1853e8; 
+}
+
+
 .delete-button {
   background-color: #e74c3c; 
   color: white;
@@ -188,9 +210,9 @@ p {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer; 
-  transition: background-color 0.2s ease-out; /* add a smooth transition effect */
+  transition: background-color 0.2s ease-out; 
 }
 
 .delete-button:hover {
-  background-color: #c0392b; /* darken the button on hover for a visual feedback */
+  background-color: #c0392b; 
 }

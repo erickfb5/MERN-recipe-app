@@ -40,10 +40,8 @@ export const handleIngredientChange = (event, recipe, setRecipe, index) => {
   setRecipe({ ...recipe, ingredients: updatedIngredients });
 };
 
-export const handleInstructionChange = (event, recipe, setRecipe, index) => {
+export const handleInstructionChange = (event, recipe, setRecipe) => {
   const { value } = event.target;
-  const updatedInstructions = [...recipe.instructions];
-  updatedInstructions[index] = value;
-  setRecipe({ ...recipe, instructions: updatedInstructions });
+  setRecipe({ ...recipe, instructions: value });
 };
 

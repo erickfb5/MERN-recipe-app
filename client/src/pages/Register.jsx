@@ -39,14 +39,11 @@ const Register = () => {
 
       setTimeoutId(setTimeout(() => navigate("/login"), 3500));
     } catch (err) {
+      console.error("Error:", err);
+      
       const { message } = err.response.data;
-
-      toast.dismiss();
-      toast.error(message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-
-      console.error(err);
+      if (message) return toast.error(message);
+      toast.error(err.message);
     }
   };
 
