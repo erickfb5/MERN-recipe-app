@@ -24,7 +24,7 @@ const Login = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-
+    
     try {
       const response = await axios.post("http://localhost:3001/auth/login", {
         username,
@@ -34,7 +34,8 @@ const Login = () => {
       setCookies("access_token", token);
       window.localStorage.setItem("userId", userId);
       window.localStorage.setItem("username", `@${username}`);
-
+      
+      toast.dismiss();
       toast.success(`Successfully logged in as @${username}`, {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2500,
@@ -43,26 +44,27 @@ const Login = () => {
       setTimeoutId(setTimeout(() => navigate("/"), 2500));
     } catch (err) {
       const { message } = err.response.data;
+      
+      toast.dismiss();
       toast.error(message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       console.error(err);
-    }
+    } 
   };
 
   return (
     <>
-    <ToastContainer/>
-    <Form
-      username={username}
-      setUsername={setUsername}
-      password={password}
-      setPassword={setPassword}
-      label="Log in"
-      onSubmit={onSubmit}
-    />
+      <ToastContainer />
+      <Form
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        label="Log in"
+        onSubmit={onSubmit}
+      />
     </>
-
   );
 };
 

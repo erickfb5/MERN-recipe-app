@@ -24,10 +24,10 @@ const Home = () => {
     try {
       setIsSaving(true);
       await saveRecipe(recipeId, userId, setSavedRecipes);
+      setIsSaving(false);
     } catch (error) {
       console.error("Failed to save recipe. Please try again later.");
     }
-    setIsSaving(false);
   };
 
   return (

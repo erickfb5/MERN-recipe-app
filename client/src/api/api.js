@@ -9,6 +9,7 @@ export const fetchRecipe = async (setRecipes, setLoading) => {
     setLoading(false);
   } catch (err) {
     console.error(`Error fetching recipes: ${err}`);
+    setLoading(false);
     throw new Error("Failed to fetch recipes.");
   }
 };
@@ -27,7 +28,7 @@ export const saveRecipe = async (recipeId, userId, setSavedRecipes) => {
   try {
     const { data } = await api.put("", { recipeId, userId });
 
-      setSavedRecipes(data.savedRecipes);
+    setSavedRecipes(data.savedRecipes);
   } catch (err) {
     console.error(`Error saving recipe: ${err}`);
     throw new Error("Failed to save recipe.");

@@ -31,6 +31,7 @@ const Register = () => {
         password,
       });
 
+      toast.dismiss();
       toast.success("Registration completed successfully. Now you may login", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 3500,
@@ -40,6 +41,7 @@ const Register = () => {
     } catch (err) {
       const { message } = err.response.data;
 
+      toast.dismiss();
       toast.error(message, {
         position: toast.POSITION.TOP_RIGHT,
       });

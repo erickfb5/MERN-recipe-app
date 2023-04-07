@@ -37,6 +37,7 @@ const CreateRecipe = () => {
 
   useEffect(() => {
     if (!userId) {
+
       toast.warning("You must log in to create a recipe!");
       setTimeout(() => navigate("/login"), 3000);
     }
@@ -55,6 +56,8 @@ const CreateRecipe = () => {
         ...recipe,
         createdAt: new Date(),
       });
+      
+      toast.dismiss();
       toast.success("New recipe was created.");
       setTimeout(() => navigate("/"), 3000);
 
