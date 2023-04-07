@@ -216,3 +216,23 @@ p {
 .delete-button:hover {
   background-color: #c0392b; 
 }
+
+
+.delete-recipe {
+width: 25px;
+height: 25px;
+margin: 1px;
+align-items: center;
+  background-color: #e74c3c; 
+  color: white;
+  border: none;
+  font-size: 15px;
+  border-radius: 20%;
+  font-weight: bold;
+  cursor: pointer; 
+  transition: background-color 0.2s ease-out; 
+}
+
+.delete-recipe:hover {
+  background-color: #c0392b; 
+}

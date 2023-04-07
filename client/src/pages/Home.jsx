@@ -5,6 +5,7 @@ import moment from "moment";
 import { OverlayModal, Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
 import { fetchRecipe, fetchSavedRecipe, saveRecipe } from "../api";
+import DeleteRecipe from "../components/DeleteRecipe";
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -49,12 +50,19 @@ const Home = () => {
         <h2>Recipes</h2>
         {loading ? (
           <Spinner />
-        ) : (
-          <ul>
+          ) : (
+            <ul>
             {recipes?.map((recipe) => (
               <li key={recipe._id}>
                 <div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  
+                  >
+
                   <h2>{recipe.name}</h2>
+                { recipe.userOwner === userId && <DeleteRecipe />}
+                  </div>
                   <img src={recipe.imageUrl} alt={recipe.name} />
                 </div>
                 {userId && (
