@@ -4,8 +4,8 @@ import axios from "axios";
 import { Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
 import { useNavigate } from "react-router-dom";
-import { fetchSavedRecipes } from "../api/api";
 import moment from "moment";
+import { fetchSavedRecipes } from "../api";
 
 const SavedRecipes = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);

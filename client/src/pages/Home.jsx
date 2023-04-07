@@ -4,7 +4,7 @@ import moment from "moment";
 
 import { OverlayModal, Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
-import { fetchRecipe, fetchSavedRecipe, saveRecipe } from "../api/api";
+import { fetchRecipe, fetchSavedRecipe, saveRecipe } from "../api";
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
