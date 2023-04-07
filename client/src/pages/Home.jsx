@@ -50,18 +50,18 @@ const Home = () => {
         <h2>Recipes</h2>
         {loading ? (
           <Spinner />
-          ) : (
-            <ul>
+        ) : (
+          <ul>
             {recipes?.map((recipe) => (
               <li key={recipe._id}>
                 <div>
                   <div
                     style={{ display: "flex", justifyContent: "space-between" }}
-                  
                   >
-
-                  <h2>{recipe.name}</h2>
-                { recipe.userOwner === userId && <DeleteRecipe />}
+                    <h2>{recipe.name}</h2>
+                    {recipe.userOwner === userId && (
+                      <DeleteRecipe recipeId={recipe._id} recipeName={recipe.name} setRecipes={setRecipes} setLoading={setLoading} />
+                    )}
                   </div>
                   <img src={recipe.imageUrl} alt={recipe.name} />
                 </div>
@@ -82,8 +82,8 @@ const Home = () => {
                 </div>
                 <div className="instructions">
                   <h4>Instructions</h4>
-                  {recipe.instructions.split(".").map((instruction) => (
-                    <p key={instruction}>{instruction}</p>
+                  {recipe.instructions.split(".").map((instruction,index) => (
+                    <p key={instruction+index}>{instruction}</p>
                   ))}
                 </div>
                 <div>
@@ -91,14 +91,12 @@ const Home = () => {
                   <div
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                        <p>
-                          {`Created by ${
-                            recipe.userOwner === userId
-                              ? "you"
-                              : recipe.createdBy
-                          }`}
-                        </p>
-                        <p>{moment(recipe.createdAt).fromNow()}</p>
+                    <p>
+                      {`Created by ${
+                        recipe.userOwner === userId ? "you" : recipe.createdBy
+                      }`}
+                    </p>
+                    <p>{moment(recipe.createdAt).fromNow()}</p>
                   </div>
                 </div>
               </li>
