@@ -9,7 +9,6 @@ export const Form = ({
   setPassword,
   label,
   onSubmit,
-  isSubmitting
 }) => {
   const usernameRegex = /^[a-zA-Z]?(?!.*__)[a-zA-Z_]*$/;
   const passwordRegex = /^(\S+)?$/;
@@ -38,7 +37,7 @@ export const Form = ({
             setPassword(event.target.value)
           }
         />
-        <button className="submit" type="submit" disabled={isSubmitting}>
+        <button className="submit" type="submit">
           {label}
         </button>
         <br />
