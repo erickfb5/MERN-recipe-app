@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import { usersRouter, recipesRouter } from "./routes/index.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -13,7 +16,7 @@ app.use("/recipes", recipesRouter);
 
 mongoose
   .connect(
-    "mongodb+srv://erickfb5:hMd8OYaYXda1lD7X@recipes.ilndjmn.mongodb.net/recipes?retryWrites=true&w=majority",
+    process.env.MONGODB_URI,
     { connectTimeoutMS: 10000 }
   )
   .catch((err) => {
@@ -21,4 +24,4 @@ mongoose
     process.exit(1);
   });
 
-app.listen(3001, () => console.log("Server running on port 3001"));
+app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));

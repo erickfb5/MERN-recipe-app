@@ -149,6 +149,7 @@ const CreateRecipe = () => {
               id="imageUrl"
               name="imageUrl"
               onChange={(event) => handleChange(event, recipe, setRecipe)}
+              required
             />
 
             <label htmlFor="cookingTime">Cooking Time (minutes)</label>
@@ -157,6 +158,7 @@ const CreateRecipe = () => {
               id="cookingTime"
               name="cookingTime"
               onChange={(event) => handleChange(event, recipe, setRecipe)}
+              required
             />
             <button type="submit">Create Recipe</button>
             
