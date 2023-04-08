@@ -82,5 +82,25 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await recipeModel.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found." });
+    }
+
+    const updatedRecipe = await recipeModel.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    res.json(updatedRecipe);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error updating recipe." });
+  }
+});
 
 export { router as recipesRouter };

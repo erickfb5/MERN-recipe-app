@@ -6,6 +6,7 @@ import { OverlayModal, Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
 import { fetchRecipe, fetchSavedRecipe, saveRecipe } from "../api";
 import DeleteRecipe from "../components/DeleteRecipe";
+import EditRecipe from "../components/EditRecipe";
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -60,7 +61,10 @@ const Home = () => {
                   >
                     <h2>{recipe.name}</h2>
                     {recipe.userOwner === userId && (
+                      <>
                       <DeleteRecipe recipeId={recipe._id} recipeName={recipe.name} setRecipes={setRecipes} setLoading={setLoading} />
+                      <EditRecipe recipe={recipe} setRecipes={setRecipes} setLoading={setLoading} />
+                      </>
                     )}
                   </div>
                   <img src={recipe.imageUrl} alt={recipe.name} />
