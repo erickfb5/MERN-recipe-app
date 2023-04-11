@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
 import Modal from "react-modal";
+import { GrEdit } from "react-icons/gr";
 
-import { useGetUserId } from "../hooks/useGetUserId";
 import {
   addIngredient,
   deleteIngredient,
@@ -12,7 +10,7 @@ import {
   handleIngredientChange,
   handleInstructionChange,
 } from "../utils/utils";
-import { api } from "../api";
+import { updateRecipe } from "../api/updateRecipe";
 
 const customStyles = {
   overlay: {
@@ -32,28 +30,12 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-const EditRecipe = ({ recipe, setRecipes, setLoading  }) => {
-  const userId = useGetUserId();
-//   const currentDate = new Date();
-
+const EditRecipe = ({ recipe, setRecipes, setLoading }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [updatedRecipe, setUpdatedRecipe] = useState(recipe);
 
-  const { _id,name, ingredients, instructions, imageUrl, cookingTime } =
+  const { _id, name, ingredients, instructions, imageUrl, cookingTime } =
     updatedRecipe;
-
-    const recipeId = _id;
-
-    console.log('updatedRecipe',recipeId)
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!userId) {
-      toast.warning("You must log in to edit a recipe!");
-      setTimeout(() => navigate("/login"), 3000);
-    }
-  }, []);
 
   const handleOpenModal = () => setModalIsOpen(true);
 
@@ -68,32 +50,19 @@ const EditRecipe = ({ recipe, setRecipes, setLoading  }) => {
     if (!ingredients[0] || !instructions) {
       return toast.warning("Ingredients and instructions must be added.");
     }
-
-    try {
-
-        setLoading(true);
-        await api.put(`/${recipeId}`, {
-          ...updatedRecipe,
-        //   updatedAt: currentDate,
-        });
-        const { data } = await api.get("/");
-        setLoading(false);
-        setRecipes(data.reverse());
-
-      toast.dismiss();
-      toast.success("Recipe was updated.");
-      handleCloseModal();
-    } catch (err) {
-      console.error(err);
-    }
+    await updateRecipe(
+      _id,
+      updatedRecipe,
+      setRecipes,
+      setLoading,
+      handleCloseModal
+    );
   };
 
   return (
     <>
       <ToastContainer />
-      <button className="edit-button" onClick={handleOpenModal}>
-        Edit
-      </button>
+      <GrEdit className="edit-icon" onClick={handleOpenModal} />
 
       <Modal
         isOpen={modalIsOpen}

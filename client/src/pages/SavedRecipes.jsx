@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import { Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";

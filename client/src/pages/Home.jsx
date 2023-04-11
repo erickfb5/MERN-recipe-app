@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { FcClock, FcLike, FcLikePlaceholder } from "react-icons/fc";
 import moment from "moment";
 
 import { OverlayModal, Spinner } from "../components";
@@ -20,9 +21,7 @@ const Home = () => {
     fetchRecipe(setRecipes, setLoading);
     userId
       ? fetchSavedRecipe(userId, setSavedRecipes)
-      : toast.warning("User is not logged in.", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+      : toast.warning("User is not logged in.");
   }, [userId]);
 
   const isRecipeSaved = (id) => savedRecipes?.includes(id);
@@ -56,27 +55,42 @@ const Home = () => {
             {recipes?.map((recipe) => (
               <li key={recipe._id}>
                 <div>
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
+                  <div className="recipe-name">
+                    <FcLike className="heart-icon" />
                     <h2>{recipe.name}</h2>
                     {recipe.userOwner === userId && (
-                      <>
-                      <DeleteRecipe recipeId={recipe._id} recipeName={recipe.name} setRecipes={setRecipes} setLoading={setLoading} />
-                      <EditRecipe recipe={recipe} setRecipes={setRecipes} setLoading={setLoading} />
-                      </>
+                      <div className="icons">
+                        <DeleteRecipe
+                          recipeId={recipe._id}
+                          recipeName={recipe.name}
+                          setRecipes={setRecipes}
+                          setLoading={setLoading}
+                        />
+                        <EditRecipe
+                          recipe={recipe}
+                          setRecipes={setRecipes}
+                          setLoading={setLoading}
+                        />
+                      </div>
                     )}
                   </div>
-                  <img src={recipe.imageUrl} alt={recipe.name} />
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <img src={recipe.imageUrl} alt={recipe.name} />
+                  </div>
                 </div>
-                {userId && (
-                  <button
-                    onClick={() => handleSaveRecipe(recipe._id)}
-                    disabled={isSaving || isRecipeSaved(recipe._id)}
-                  >
-                    {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-                  </button>
-                )}
+                <div>
+                  {userId && isRecipeSaved(recipe._id) ? (
+                    <FcLikePlaceholder fontSize="20px" />
+                  ) : (
+                    <FcLike onClick={() => handleSaveRecipe(recipe._id)} />
+                  )}
+                </div>
+                {/* // <button
+                  // onClick={() => handleSaveRecipe(recipe._id)}
+                  //   disabled={isSaving || isRecipeSaved(recipe._id)}
+                  // >
+                  //   {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
+                  // </button> */}
                 <div className="ingredients">
                   <h4>Ingredients</h4>
 
@@ -86,12 +100,15 @@ const Home = () => {
                 </div>
                 <div className="instructions">
                   <h4>Instructions</h4>
-                  {recipe.instructions.split(".").map((instruction,index) => (
-                    <p key={instruction+index}>{instruction}</p>
+                  {recipe.instructions.split(".").map((instruction, index) => (
+                    <p key={instruction + index}>{instruction}</p>
                   ))}
                 </div>
                 <div>
-                  <h5>⏰ Cooking Time: {`${recipe.cookingTime} minutes`}</h5>
+                  <h5>
+                    <FcClock fontSize="15px" /> Cooking Time:{" "}
+                    {`${recipe.cookingTime} minutes`}
+                  </h5>
                   <div
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >

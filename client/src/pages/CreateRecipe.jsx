@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { TiDelete } from "react-icons/ti";
+import { MdOutlineAddCircle } from "react-icons/md";
 import axios from "axios";
 
 import { useGetUserId } from "../hooks/useGetUserId";
@@ -12,11 +14,11 @@ import {
   handleIngredientChange,
   handleInstructionChange,
 } from "../utils/utils";
+import { createRecipe } from "../api/createRecipe";
 
 const CreateRecipe = () => {
   const userId = useGetUserId();
   const username = useGetUsername();
-  const currentDate = new Date();
 
   const [recipe, setRecipe] = useState({
     name: "",
@@ -36,7 +38,7 @@ const CreateRecipe = () => {
   useEffect(() => {
     if (!userId) {
       toast.warning("You must log in to create a recipe!");
-      setTimeout(() => navigate("/login"), 3000);
+      setTimeout(() => navigate("/login"), 1500);
     }
   }, []);
 
@@ -48,24 +50,12 @@ const CreateRecipe = () => {
       return toast.warning("Ingredients and instructions must be added.");
     }
 
-    try {
-      await axios.post("http://localhost:3001/recipes", {
-        ...recipe,
-        createdAt: currentDate,
-      });
-
-      toast.dismiss();
-      toast.success("New recipe was created.");
-      setTimeout(() => navigate("/"), 3000);
-    } catch (err) {
-      console.error(err);
-    }
+    await createRecipe(recipe, navigate);
   };
 
   return (
     <>
       <ToastContainer />
-
       {userId && (
         <div className="create-recipe">
           <h2>Create Recipe</h2>
@@ -94,22 +84,20 @@ const CreateRecipe = () => {
                   }
                   required
                 />
-                <button
-                  className="delete-button"
-                  type="button"
+                <TiDelete
+                  size="30px"
+                  color="red"
                   onClick={() => deleteIngredient(recipe, setRecipe, index)}
-                >
-                  x
-                </button>
+                />
               </div>
             ))}
-            <button
+
+            <div
               className="add-button"
-              type="button"
               onClick={() => addIngredient(recipe, setRecipe)}
             >
-              Add
-            </button>
+              <MdOutlineAddCircle size="25px" color="white" type="button" />
+            </div>
 
             <label htmlFor="instructions">Instructions</label>
             <div style={{ display: "flex", justifyContent: "space-between" }}>

@@ -12,7 +12,8 @@ const recipeSchema = new Schema({
     required: true,
   },
   createdBy: { type: String, required: true },
-  createdAt: { type: Date, required: true }
+  createdAt: { type: Date, required: true },
+  updatedAt: { type: Date },
 });
 
 export const recipeModel = model("recipes", recipeSchema);
