@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { TiDelete } from "react-icons/ti";
 import { MdOutlineAddCircle } from "react-icons/md";
-import axios from "axios";
 
 import { useGetUserId } from "../hooks/useGetUserId";
 import { useGetUsername } from "../hooks/useGetUsername";
 import {
   addIngredient,
   deleteIngredient,
-  handleChange,
+  handleFormChange,
   handleIngredientChange,
   handleInstructionChange,
-} from "../utils/utils";
-import { createRecipe } from "../api/createRecipe";
+  onSubmitRecipe,
+} from "../utils";
 
 const CreateRecipe = () => {
   const userId = useGetUserId();
@@ -42,30 +41,19 @@ const CreateRecipe = () => {
     }
   }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const { ingredients, instructions } = recipe;
-
-    if (!ingredients[0] || !instructions[0]) {
-      return toast.warning("Ingredients and instructions must be added.");
-    }
-
-    await createRecipe(recipe, navigate);
-  };
-
   return (
     <>
       <ToastContainer />
       {userId && (
         <div className="create-recipe">
           <h2>Create Recipe</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(event) => onSubmitRecipe(event, recipe, navigate)}>
             <label htmlFor="name">Name</label>
             <input
               type="text"
               id="name"
               name="name"
-              onChange={(event) => handleChange(event, recipe, setRecipe)}
+              onChange={(event) => handleFormChange(event, recipe, setRecipe)}
               required
             />
 
@@ -118,7 +106,7 @@ const CreateRecipe = () => {
               type="text"
               id="imageUrl"
               name="imageUrl"
-              onChange={(event) => handleChange(event, recipe, setRecipe)}
+              onChange={(event) => handleFormChange(event, recipe, setRecipe)}
               required
             />
 
@@ -127,7 +115,7 @@ const CreateRecipe = () => {
               type="number"
               id="cookingTime"
               name="cookingTime"
-              onChange={(event) => handleChange(event, recipe, setRecipe)}
+              onChange={(event) => handleFormChange(event, recipe, setRecipe)}
               required
             />
             <button className="submit" type="submit">

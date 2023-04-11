@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
+import { ToastContainer } from "react-toastify";
 
-import { Form } from "../components/Form";
+import { AuthForm } from "../components";
+import { onSubmitLogin } from "../utils";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -22,52 +22,25 @@ const Login = () => {
     };
   }, [timeoutId]);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
-        username,
-        password,
-      });
-      const { token, userId } = response.data;
-      setCookies("access_token", token);
-      window.localStorage.setItem("userId", userId);
-      window.localStorage.setItem("username", `@${username}`);
-
-      toast.dismiss();
-      toast.success(`Successfully logged in as @${username}`, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2500,
-      });
-
-      setTimeoutId(setTimeout(() => navigate("/"), 2500));
-    } catch (err) {
-      console.error("Error:", err);
-
-      const { message } = err.response.data;
-      if (message) {
-        return toast.error(message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-
-      toast.error(err.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
-  };
-
   return (
     <>
       <ToastContainer />
-      <Form
+      <AuthForm
+        label="Log in"
         username={username}
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
-        label="Log in"
-        onSubmit={onSubmit}
+        onSubmit={(event) =>
+          onSubmitLogin(
+            event,
+            username,
+            password,
+            setCookies,
+            setTimeoutId,
+            navigate
+          )
+        }
       />
     </>
   );

@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 import { api } from ".";
 
-export const saveRecipe = async (recipeId, userId, setSavedRecipes) => {
+const saveRecipe = async (recipeId, userId, setSavedRecipes) => {
   try {
     const { data } = await api.put("", { recipeId, userId });
 
@@ -11,10 +11,10 @@ export const saveRecipe = async (recipeId, userId, setSavedRecipes) => {
     console.error(`Error saving recipe: ${err}`);
 
     toast.dismiss();
-    toast.error(err.message, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    toast.error(err.message);
 
     throw new Error("Failed to save recipe.");
   }
 };
+
+export default saveRecipe;

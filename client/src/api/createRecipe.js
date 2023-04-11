@@ -2,9 +2,14 @@ import { toast } from "react-toastify";
 
 import { api } from ".";
 
-export const createRecipe = async (recipe, navigate) => {
+ const createRecipe = async (recipe, navigate) => {
+  const { ingredients, instructions } = recipe;
+
+  if (!ingredients[0] || !instructions[0]) {
+    return toast.warning("Ingredients and instructions must be added.");
+  }
   try {
-    await api.post("http://localhost:3001/recipes", {
+    await api.post("", {
       ...recipe,
       createdAt: new Date(),
     });
@@ -17,3 +22,5 @@ export const createRecipe = async (recipe, navigate) => {
     throw new Error("Failed to create recipe.");
   }
 };
+
+export default createRecipe

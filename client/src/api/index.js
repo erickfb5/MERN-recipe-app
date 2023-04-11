@@ -2,8 +2,12 @@ import axios from "axios";
 
 export const api = axios.create({ baseURL: "http://localhost:3001/recipes" });
 
-export { deleteRecipe } from "./deleteRecipe";
-export { fetchRecipe } from "./fetchRecipe";
-export { fetchSavedRecipe } from "./fetchSavedRecipe";
-export { fetchSavedRecipes } from "./fetchSavedRecipes";
-export { saveRecipe } from "./saveRecipe";
+export { default as authLogin } from "./authLogin";
+export { default as authRegister } from "./authRegister";
+export { default as createRecipe } from "./createRecipe";
+export { default as deleteRecipe } from "./deleteRecipe";
+export { default as fetchRecipe } from "./fetchRecipe";
+export { default as fetchSavedRecipe } from "./fetchSavedRecipe";
+export { default as fetchSavedRecipes } from "./fetchSavedRecipes";
+export { default as saveRecipe } from "./saveRecipe";
+export { default as updateRecipe } from "./updateRecipe";

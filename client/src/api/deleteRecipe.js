@@ -1,10 +1,12 @@
 import { api } from ".";
 
-export const deleteRecipe = async (recipeId, setRecipes, setLoading) => {
+ const deleteRecipe = async (recipeId, setRecipes, setLoading) => {
   try {
     setLoading(true);
+
     await api.delete(`/${recipeId}`);
     const { data } = await api.get("/");
+
     setLoading(false);
     setRecipes(data.reverse());
   } catch (err) {
@@ -12,3 +14,5 @@ export const deleteRecipe = async (recipeId, setRecipes, setLoading) => {
     throw new Error("Failed to delete recipe.");
   }
 };
+
+export default deleteRecipe

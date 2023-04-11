@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import { FormInput } from "./FormInput";
 
-export const Form = ({
+ const AuthForm = ({
   username,
   setUsername,
   password,
@@ -56,3 +56,5 @@ export const Form = ({
     </div>
   );
 };
+
+export default AuthForm

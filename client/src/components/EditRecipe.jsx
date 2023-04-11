@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
 import { GrEdit } from "react-icons/gr";
 
 import {
   addIngredient,
   deleteIngredient,
-  handleChange,
+  handleFormChange,
   handleIngredientChange,
   handleInstructionChange,
-} from "../utils/utils";
-import { updateRecipe } from "../api/updateRecipe";
+} from "../utils";
+import { updateRecipe } from "../api";
 
 const customStyles = {
   overlay: {
@@ -47,16 +47,19 @@ const EditRecipe = ({ recipe, setRecipes, setLoading }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!ingredients[0] || !instructions) {
-      return toast.warning("Ingredients and instructions must be added.");
+    try {
+      await updateRecipe(
+        ingredients,
+        instructions,
+        _id,
+        updatedRecipe,
+        setRecipes,
+        setLoading,
+        handleCloseModal
+      );
+    } catch (err) {
+      console.error(err);
     }
-    await updateRecipe(
-      _id,
-      updatedRecipe,
-      setRecipes,
-      setLoading,
-      handleCloseModal
-    );
   };
 
   return (
@@ -78,7 +81,7 @@ const EditRecipe = ({ recipe, setRecipes, setLoading }) => {
             name="name"
             value={name}
             onChange={(event) =>
-              handleChange(event, updatedRecipe, setUpdatedRecipe)
+              handleFormChange(event, updatedRecipe, setUpdatedRecipe)
             }
             required
           />
@@ -143,7 +146,7 @@ const EditRecipe = ({ recipe, setRecipes, setLoading }) => {
             name="imageUrl"
             value={imageUrl}
             onChange={(event) =>
-              handleChange(event, updatedRecipe, setUpdatedRecipe)
+              handleFormChange(event, updatedRecipe, setUpdatedRecipe)
             }
             required
           />
@@ -155,7 +158,7 @@ const EditRecipe = ({ recipe, setRecipes, setLoading }) => {
             name="cookingTime"
             value={cookingTime}
             onChange={(event) =>
-              handleChange(event, updatedRecipe, setUpdatedRecipe)
+              handleFormChange(event, updatedRecipe, setUpdatedRecipe)
             }
             required
           />
@@ -168,4 +171,4 @@ const EditRecipe = ({ recipe, setRecipes, setLoading }) => {
   );
 };
 
-export default EditRecipe;
+export default EditRecipe

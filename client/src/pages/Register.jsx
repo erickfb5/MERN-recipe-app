@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
-
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Form } from "../components/Form";
+import { AuthForm } from "../components";
+import { onSubmitRegister } from "../utils";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -22,49 +21,18 @@ const Register = () => {
     };
   }, [timeoutId]);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      await axios.post("http://localhost:3001/auth/register", {
-        username,
-        password,
-      });
-
-      toast.dismiss();
-      toast.success("Registration completed successfully. Now you may login", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3500,
-      });
-
-      setTimeoutId(setTimeout(() => navigate("/login"), 3500));
-    } catch (err) {
-      console.error("Error:", err);
-      
-      const { message } = err.response.data;
-      if (message) return toast.error(message);
-      toast.error(err.message);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [timeoutId]);
-
   return (
     <>
       <ToastContainer />
-      <Form
+      <AuthForm
+        label="Register"
         username={username}
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
-        label="Register"
-        onSubmit={onSubmit}
+        onSubmit={(event) =>
+          onSubmitRegister(event, username, password, setTimeoutId, navigate)
+        }
       />
     </>
   );

@@ -1,6 +1,6 @@
 import { api } from ".";
 
-export const fetchSavedRecipes = async (
+ const fetchSavedRecipes = async (
   userId,
   setSavedRecipes,
   setLoading
@@ -11,7 +11,8 @@ export const fetchSavedRecipes = async (
     setLoading(false);
   } catch (err) {
     console.error(`Error fetching saved recipes: ${err}`);
-
     throw new Error("Failed to fetch saved recipes.");
   }
 };
+
+export default fetchSavedRecipes

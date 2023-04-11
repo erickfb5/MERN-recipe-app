@@ -3,11 +3,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { FcClock, FcLike, FcLikePlaceholder } from "react-icons/fc";
 import moment from "moment";
 
-import { OverlayModal, Spinner } from "../components";
+import { DeleteRecipe, EditRecipe, OverlayModal, Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
 import { fetchRecipe, fetchSavedRecipe, saveRecipe } from "../api";
-import DeleteRecipe from "../components/DeleteRecipe";
-import EditRecipe from "../components/EditRecipe";
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -81,8 +79,10 @@ const Home = () => {
                 <div>
                   {userId && isRecipeSaved(recipe._id) ? (
                     <FcLikePlaceholder fontSize="20px" />
-                  ) : (
+                  ) : !userId && !isRecipeSaved(recipe._id) ? (
                     <FcLike onClick={() => handleSaveRecipe(recipe._id)} />
+                  ) : (
+                    ""
                   )}
                 </div>
                 {/* // <button

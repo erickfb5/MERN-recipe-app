@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { GoSignOut } from "react-icons/go";
-import { FaHome, FaSignInAlt } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 
 import { useGetUserId } from "../hooks/useGetUserId";
 
-const Navbar = () => {
+ const Navbar = () => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const userId = useGetUserId();
 
@@ -33,4 +33,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar

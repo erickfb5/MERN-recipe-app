@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import { Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
+
 import { fetchSavedRecipes } from "../api";
 
 const SavedRecipes = () => {
@@ -57,14 +58,12 @@ const SavedRecipes = () => {
                   <div
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                        <p>
-                          {`Created by ${
-                            recipe.userOwner === userId
-                              ? "you"
-                              : recipe.createdBy
-                          }`}
-                        </p>
-                        <p>{moment(recipe.createdAt).fromNow()}</p>
+                    <p>
+                      {`Created by ${
+                        recipe.userOwner === userId ? "you" : recipe.createdBy
+                      }`}
+                    </p>
+                    <p>{moment(recipe.createdAt).fromNow()}</p>
                   </div>
                 </div>
               </li>

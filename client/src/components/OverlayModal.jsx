@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
-const OverlayModal = ({ message, path = "" }) => {
+ const OverlayModal = ({ message, path = "" }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const OverlayModal = ({ message, path = "" }) => {
   );
 };
 
-export default OverlayModal;
+export default OverlayModal
