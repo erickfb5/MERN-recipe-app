@@ -41,7 +41,7 @@ const DeleteRecipe = ({ recipeId, recipeName, setRecipes, setLoading }) => {
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Delete Recipe Modal"
       >
-        <h2>{`Are you sure you want to delete this ${recipeName} recipe?`}</h2>
+        <h2>{`Do you really want to delete this ${recipeName} recipe?`}</h2>
         <div className="modal-buttons">
           <button className="button-yes" onClick={handleDelete}>
             Yes

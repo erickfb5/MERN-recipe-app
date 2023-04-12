@@ -6,6 +6,7 @@ export { default as authLogin } from "./authLogin";
 export { default as authRegister } from "./authRegister";
 export { default as createRecipe } from "./createRecipe";
 export { default as deleteRecipe } from "./deleteRecipe";
+export { default as deleteSavedRecipe } from "./deleteSavedRecipe";
 export { default as fetchRecipe } from "./fetchRecipe";
 export { default as fetchSavedRecipe } from "./fetchSavedRecipe";
 export { default as fetchSavedRecipes } from "./fetchSavedRecipes";

@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+
 .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, */
+    /* Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
 }
 
 body {
   margin: 0;
   padding: 0;
+  background-color: #c2c2c26e;
+  font-family: 'Poppins', sans-serif;
+
 }
 
 .auth {
@@ -17,7 +23,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f2f2f2;
+  background-color: #8b1b1b;
 }
 
 .auth-container {
@@ -26,9 +32,10 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-color: white;
+  background-color: #70c1b3;
+  color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(87, 9, 9, 0.584);
   margin: 20px;
   width: 400px;
 }
@@ -54,7 +61,7 @@ input {
 .navbar {
   width: 100%;
   height: 80px;
-  background-color: black;
+  background-color: #70c1b3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,16 +83,29 @@ a {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-color: white;
+  background-color: #70c1b3;
+  color: white;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   margin: 20px;
-  width: 40px;
+  width: 400px;
+
 }
 .create-recipe form {
   display: flex;
   flex-direction: column;
 }
+
+.create-recipe input {
+  width: 300px;
+}
+
+.create-recipe textarea {
+  width: 315px;
+}
+
+
+
 ul {
   list-style: none;
   padding: 0;
@@ -93,9 +113,10 @@ ul {
 }
 
 li {
-  border: 1px solid black;
+  border: 1px solid #70c1b3;
   padding: 10px;
   margin-bottom: 10px;
+  background-color: #ffffff99;
 }
 
 h2 {
@@ -127,24 +148,19 @@ p {
   justify-content: center;
   align-items: center;
   font-size: 25px;
-  width: 100%;
+  width: 320px;
   height: 40px;
   color: white;
-  background-color: rgba(0, 0, 0);
+  background-color: #ff7f50;
   border: none;
   border-radius: 5px;
-  box-shadow: #7f1818;
+  box-shadow: #f9a26c;
   transition: background-color 0.3s ease-out;
 }
 
 .submit:hover {
   color: white;
-  background-color: rgb(8, 181, 97);
-}
-
-.error-message {
-  color: red;
-  font-size: 10px;
+  background-color: #f9a26c;
 }
 
 .register-link {
@@ -152,38 +168,13 @@ p {
   color: rgb(16, 100, 204);
 }
 
-.modal {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
-}
-
-.modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.modal-header {
-  margin-bottom: 10px;
-}
-
 .add-button {
   display: flex;
   justify-content: center;
-
-  background-color: #0f46ea;
+  width: 300px;
+  background-color: #908f8e;
   border: none;
   border-radius: 5px;
-  /* margin-left: 5px; */
   margin-bottom: 10px;
   padding: 5px 10px;
 
@@ -192,9 +183,19 @@ p {
 }
 
 .add-button:hover {
-  background-color: #1853e8;
+  background-color: #ff7f50;
 }
 
+.delete-row {
+  font-size: 35px;
+  color: white;
+  margin-top: 3px;
+}
+
+.delete-row:hover {
+  color: red;
+  transition: color 0.3s ease-out;
+}
 .delete-button {
   background-color: #e74c3c;
   color: white;
@@ -215,18 +216,17 @@ p {
 }
 
 .delete-recipe {
+  margin-left: -50px;
+  padding: 0 10px;
   width: 25px;
   height: 25px;
-  color: #e74c3c;
-  border: none;
-  border-radius: 20%;
-  font-weight: bold;
+  color: #ff7f50;
   cursor: pointer;
   transition: background-color 0.2s ease-out;
 }
 
 .delete-recipe:hover {
-  color: #c0392b;
+  color: #f9a26c;
 }
 
 .edit-icon {
@@ -235,11 +235,11 @@ p {
 }
 
 .edit-icon path {
-  stroke: #1e90ff;
+  stroke: #70c1b3;
 }
 
 .edit-icon:hover path {
-  stroke: #0074d9;
+  stroke: #0e907b;
 }
 
 .modal-buttons {
@@ -260,12 +260,12 @@ p {
 }
 
 .button-yes {
-  background-color: #33cc33;
+  background-color: #70c1b3;
   color: white;
 }
 
 .button-cancel {
-  background-color: #ff3333;
+  background-color: #ff7f50;
   color: white;
 }
 
@@ -277,29 +277,70 @@ p {
 
 .recipe-name {
   display: flex;
- justify-content: space-between;
- align-items: center;
- background-color: #33cc330d;
+  justify-content: space-between;
+  align-items: censter;
+  text-transform: capitalize;
+  text-align: center;
 }
 
-.icons{
+.icons {
   display: flex;
   margin-bottom: 10px;
+  visibility: hidden;
+}
 
-
-} 
-
-.heart-icon{
+.star-icon {
   margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 25px;
 }
-.edit-icon{
+.edit-icon {
   position: absolute;
-  margin-left: 20px;
-  padding: 0 10px;
+  margin-left: -20px;
+  margin-top: 4px;
+  padding-left: 10px;
 }
 
-.delete-icon{
-  position: absolute;
-  margin-left: 20px;
-  padding: 0 10px;
+@media only screen and (max-width: 480px) {
+  .auth {
+    height: 80vh;
+    
+  }
+
+  .auth-container {
+    width: 300px;
+  }
+
+  .create-recipe {
+    width: 300px;
+  }
+
+  .create-recipe input {
+    width: 250px;
+  }
+
+  .create-recipe textarea {
+    width: 265px;
+  }
+
+  img {
+    width: 300px;
+  }
+
+  p {
+    max-width: 300px;
+  }
+
+  .submit {
+    width: 280px;
+  }
+
+  .add-button {
+    width: 250px;
+  }
+
+  .delete-button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
 }

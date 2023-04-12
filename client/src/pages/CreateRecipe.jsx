@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { TiDelete } from "react-icons/ti";
+import { TiDeleteOutline } from "react-icons/ti";
 import { MdOutlineAddCircle } from "react-icons/md";
 
 import { useGetUserId } from "../hooks/useGetUserId";
@@ -14,6 +14,7 @@ import {
   handleInstructionChange,
   onSubmitRecipe,
 } from "../utils";
+
 
 const CreateRecipe = () => {
   const userId = useGetUserId();
@@ -47,6 +48,7 @@ const CreateRecipe = () => {
       {userId && (
         <div className="create-recipe">
           <h2>Create Recipe</h2>
+          
           <form onSubmit={(event) => onSubmitRecipe(event, recipe, navigate)}>
             <label htmlFor="name">Name</label>
             <input
@@ -72,9 +74,8 @@ const CreateRecipe = () => {
                   }
                   required
                 />
-                <TiDelete
-                  size="30px"
-                  color="red"
+                <TiDeleteOutline
+                 className="delete-row"
                   onClick={() => deleteIngredient(recipe, setRecipe, index)}
                 />
               </div>

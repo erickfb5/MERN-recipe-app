@@ -11,6 +11,8 @@ import {
   handleInstructionChange,
 } from "../utils";
 import { updateRecipe } from "../api";
+import { TiDeleteOutline } from "react-icons/ti";
+import { MdOutlineAddCircle } from "react-icons/md";
 
 const customStyles = {
   overlay: {
@@ -72,103 +74,106 @@ const EditRecipe = ({ recipe, setRecipes, setLoading }) => {
         onRequestClose={handleCloseModal}
         style={customStyles}
       >
-        <h2>Edit Recipe</h2>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(event) =>
-              handleFormChange(event, updatedRecipe, setUpdatedRecipe)
-            }
-            required
-          />
+        <div className="create-recipe">
+          <h2>Edit Recipe</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={(event) =>
+                handleFormChange(event, updatedRecipe, setUpdatedRecipe)
+              }
+              required
+            />
 
-          <label htmlFor="ingredients">Ingredients</label>
-          {ingredients.map((ingredient, index) => (
+            <label htmlFor="ingredients">Ingredients</label>
+            {ingredients.map((ingredient, index) => (
+              <div
+                key={index}
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <input
+                  type="text"
+                  name="ingredients"
+                  value={ingredient}
+                  onChange={(event) =>
+                    handleIngredientChange(
+                      event,
+                      updatedRecipe,
+                      setUpdatedRecipe,
+                      index
+                    )
+                  }
+                  required
+                />
+                <TiDeleteOutline
+                  className="delete-row"
+                  onClick={() =>
+                    deleteIngredient(updatedRecipe, setUpdatedRecipe, index)
+                  }
+                />
+              </div>
+            ))}
             <div
-              key={index}
-              style={{ display: "flex", justifyContent: "space-between" }}
+              className="add-button"
+              type="button"
+              onClick={() => addIngredient(updatedRecipe, setUpdatedRecipe)}
             >
-              <input
+              <MdOutlineAddCircle size="25px" color="white" type="button" />
+            </div>
+
+            <label htmlFor="instructions">Instructions</label>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <textarea
                 type="text"
-                name="ingredients"
-                value={ingredient}
+                name="instructions"
+                value={instructions}
                 onChange={(event) =>
-                  handleIngredientChange(
+                  handleInstructionChange(
                     event,
                     updatedRecipe,
-                    setUpdatedRecipe,
-                    index
+                    setUpdatedRecipe
                   )
                 }
                 required
+                style={{ minHeight: 100, resize: "vertical" }}
               />
-              <button
-                className="delete-button"
-                type="button"
-                onClick={() =>
-                  deleteIngredient(updatedRecipe, setUpdatedRecipe, index)
-                }
-              >
-                x
-              </button>
             </div>
-          ))}
-          <button
-            className="add-button"
-            type="button"
-            onClick={() => addIngredient(updatedRecipe, setUpdatedRecipe)}
-          >
-            Add
-          </button>
 
-          <label htmlFor="instructions">Instructions</label>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <textarea
+            <label htmlFor="imageUrl">Image URL</label>
+            <input
               type="text"
-              name="instructions"
-              value={instructions}
+              id="imageUrl"
+              name="imageUrl"
+              value={imageUrl}
               onChange={(event) =>
-                handleInstructionChange(event, updatedRecipe, setUpdatedRecipe)
+                handleFormChange(event, updatedRecipe, setUpdatedRecipe)
               }
               required
-              style={{ minHeight: 100, resize: "vertical" }}
             />
-          </div>
 
-          <label htmlFor="imageUrl">Image URL</label>
-          <input
-            type="text"
-            id="imageUrl"
-            name="imageUrl"
-            value={imageUrl}
-            onChange={(event) =>
-              handleFormChange(event, updatedRecipe, setUpdatedRecipe)
-            }
-            required
-          />
-
-          <label htmlFor="cookingTime">Cooking Time (minutes)</label>
-          <input
-            type="number"
-            id="cookingTime"
-            name="cookingTime"
-            value={cookingTime}
-            onChange={(event) =>
-              handleFormChange(event, updatedRecipe, setUpdatedRecipe)
-            }
-            required
-          />
-          <button className="submit" type="submit">
-            Update Recipe
-          </button>
-        </form>
+            <label htmlFor="cookingTime">Cooking Time (minutes)</label>
+            <input
+              type="number"
+              id="cookingTime"
+              name="cookingTime"
+              value={cookingTime}
+              onChange={(event) =>
+                handleFormChange(event, updatedRecipe, setUpdatedRecipe)
+              }
+              required
+            />
+            <button className="submit" type="submit">
+              Update Recipe
+            </button>
+          </form>
+        </div>
       </Modal>
     </>
   );
 };
 
-export default EditRecipe
+export default EditRecipe;

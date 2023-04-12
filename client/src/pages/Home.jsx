@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { FcClock, FcLike, FcLikePlaceholder } from "react-icons/fc";
+import { ClockLoader } from "react-spinners";
+import { FcClock } from "react-icons/fc";
+import { FaStar } from "react-icons/fa";
 import moment from "moment";
 
 import { DeleteRecipe, EditRecipe, OverlayModal, Spinner } from "../components";
 import { useGetUserId } from "../hooks/useGetUserId";
-import { fetchRecipe, fetchSavedRecipe, saveRecipe } from "../api";
+import {
+  deleteSavedRecipe,
+  fetchRecipe,
+  fetchSavedRecipe,
+  saveRecipe,
+} from "../api";
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userId = useGetUserId();
 
@@ -26,9 +32,9 @@ const Home = () => {
 
   const handleSaveRecipe = async (recipeId) => {
     try {
-      setIsSaving(true);
+      setLoading(true);
       await saveRecipe(recipeId, userId, setSavedRecipes);
-      setIsSaving(false);
+      setLoading(false);
     } catch (err) {
       console.error("Failed to save recipe. Please try again later.");
       console.error("custom:::", err);
@@ -45,19 +51,42 @@ const Home = () => {
           alignItems: "center",
         }}
       >
-        <h2>Recipes</h2>
+        <h2>Recipes Feed</h2>
         {loading ? (
-          <Spinner />
+          <ClockLoader speedMultiplier={2} />
         ) : (
           <ul>
             {recipes?.map((recipe) => (
               <li key={recipe._id}>
-                <div>
-                  <div className="recipe-name">
-                    <FcLike className="heart-icon" />
-                    <h2>{recipe.name}</h2>
+                <div className="recipe-name">
+                  <div className="icons" style={{ visibility: "visible" }}>
+                    {userId && isRecipeSaved(recipe._id) ? (
+                      <FaStar
+                        className="star-icon"
+                        color="rgba(194, 133, 10, 0.27)"
+                        onClick={() =>
+                          deleteSavedRecipe(
+                            recipe._id,
+                            userId,
+                            setSavedRecipes,
+                            setLoading
+                          )
+                        }
+                      />
+                    ) : userId && !isRecipeSaved(recipe._id) ? (
+                      <FaStar
+                        className="star-icon"
+                        color="rgb(255, 217, 0)"
+                        onClick={() => handleSaveRecipe(recipe._id)}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <h2>{recipe.name}</h2>
+                  <div className="icons" style={{ visibility: "visible" }}>
                     {recipe.userOwner === userId && (
-                      <div className="icons">
+                      <>
                         <DeleteRecipe
                           recipeId={recipe._id}
                           recipeName={recipe.name}
@@ -69,28 +98,15 @@ const Home = () => {
                           setRecipes={setRecipes}
                           setLoading={setLoading}
                         />
-                      </div>
+                      </>
                     )}
                   </div>
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <img src={recipe.imageUrl} alt={recipe.name} />
-                  </div>
                 </div>
-                <div>
-                  {userId && isRecipeSaved(recipe._id) ? (
-                    <FcLikePlaceholder fontSize="20px" />
-                  ) : !userId && !isRecipeSaved(recipe._id) ? (
-                    <FcLike onClick={() => handleSaveRecipe(recipe._id)} />
-                  ) : (
-                    ""
-                  )}
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <img src={recipe.imageUrl} alt={recipe.name} />
                 </div>
-                {/* // <button
-                  // onClick={() => handleSaveRecipe(recipe._id)}
-                  //   disabled={isSaving || isRecipeSaved(recipe._id)}
-                  // >
-                  //   {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-                  // </button> */}
+
+                <div></div>
                 <div className="ingredients">
                   <h4>Ingredients</h4>
 
@@ -124,7 +140,6 @@ const Home = () => {
             ))}
           </ul>
         )}
-        {isSaving && <OverlayModal message="Saving recipe" />}
       </div>
     </>
   );

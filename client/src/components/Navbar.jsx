@@ -25,7 +25,7 @@ import { useGetUserId } from "../hooks/useGetUserId";
       {!cookies.access_token ? (
         <Link to="/login">Log in  </Link>
       ) : (
-        <Link to={"/login"} style={{ color: "red" }} onClick={logout}>
+        <Link to={"/login"} style={{ color: "#a40d14" }} onClick={logout}>
           <GoSignOut fontSize="30px" />
         </Link>
       )}

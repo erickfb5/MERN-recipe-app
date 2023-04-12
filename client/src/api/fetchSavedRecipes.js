@@ -7,6 +7,7 @@ import { api } from ".";
 ) => {
   try {
     const { data } = await api.get(`/savedRecipes/${userId}`);
+    setLoading(true)
     setSavedRecipes(data.savedRecipes);
     setLoading(false);
   } catch (err) {
